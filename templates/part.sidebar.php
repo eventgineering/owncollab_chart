@@ -11,7 +11,7 @@
         <span id="sidebar_tab_1" class="sidebar_tab_active"><?php p($l->t('Share'));?></span>
         <span id="sidebar_tab_2"><?php p($l->t('Export'));?></span>
         <span id="sidebar_tab_3"><?php p($l->t('Settings'));?></span>
-        <span id="sidebar_tab-4"><?php p($1->t('Coloring'));?></span>
+        <span id="sidebar_tab_4"><?php p($1->t('Coloring'));?></span>
     </div>
     <div id="sidebar-content">
         <div id="sidebar_content_1" style="display: block">
