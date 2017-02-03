@@ -85,8 +85,7 @@ OC.L10N.register(
             "Response error info": "Fehlermeldung",
             "Now": "Jetzt",
             "Done": "Fertig",
-            "Application throw error": "Die Anwendung meldet einen Fehler",
-            "Coloring": "Einfärben"
+            "Application throw error": "Die Anwendung meldet einen Fehler"
 
     },
     "nplurals=2; plural=(n != 1);");
