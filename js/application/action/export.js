@@ -265,7 +265,7 @@ if(App.namespace) { App.namespace('Action.Export', function(App) {
 
     exp.toPNG = function () {
         var config = {};
-	gantt.exportToPDF( {raw: true} );
+        gantt.exportToPDF( {raw: true} );
 //        gantt.exportToPNG(config);
     };
 
