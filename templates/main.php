@@ -4,8 +4,8 @@
  * @var array $_
  */
 
-script('owncollab_chart', 'libs/colorpicker/nojquery/tinycolorpicker');
-style('owncollab_chart', 'tinycolorpicker');
+script('owncollab_chart', 'libs/colorpicker/spectrum');
+style('owncollab_chart', 'spectrum');
 
 ?>
 
