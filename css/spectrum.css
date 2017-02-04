@@ -254,9 +254,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 */
 
 .sp-container {
-    border-radius: 0;
+    border-radius: 3px;
     background-color: #ECECEC;
-    border: solid 1px #f0c49B;
+    border: solid 1px #DDD;
     padding: 0;
 }
 .sp-container, .sp-container button, .sp-container input, .sp-color, .sp-hue, .sp-clear {
@@ -314,6 +314,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 /* Palettes */
 .sp-palette-container {
     border-right: solid 1px #ccc;
+    border-radius: 3px;
 }
 
 .sp-palette-only .sp-palette-container {
@@ -331,7 +332,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border:solid 2px transparent;
 }
 .sp-palette .sp-thumb-el:hover, .sp-palette .sp-thumb-el.sp-thumb-active {
-    border-color: orange;
+    border-color: 1d2d44;
 }
 .sp-thumb-el {
     position:relative;
@@ -370,13 +371,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display:inline-block;
     *zoom: 1;
     *display: inline;
-    border: solid 1px #91765d;
+    border: solid 1px #DDD;
     background: #eee;
     color: #333;
     vertical-align: middle;
+    border-radius: 3px;
 }
 .sp-replacer:hover, .sp-replacer.sp-active {
-    border-color: #F0C49B;
+    border-color: #DDD;
     color: #111;
 }
 .sp-replacer.sp-disabled {

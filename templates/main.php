@@ -5,6 +5,7 @@
  */
 
 script('owncollab_chart', 'libs/colorpicker/spectrum');
+script('owncollab_chart', 'application/action/changecolor');
 style('owncollab_chart', 'spectrum');
 
 ?>
