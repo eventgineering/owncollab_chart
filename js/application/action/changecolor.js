@@ -11,9 +11,18 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 				var fragment = document.createDocumentFragment();
 				var groupsusers = DataStore.get('groupsusers');
 				var deprecatedUsers = ['collab_user'];
+				var _table = document.createElement('table'),
+					_tableRow = document.createElement('tr'),
+					_tableHeader = document.createElement('th'),
+					_tableData = document.createElement('td');
+				_table.appendChild(_tableRow);
+				_tableHeader.innerHTML += '<b>test<b>';
+				_table.appendChild(_tableHeader);
+				console.log(_table);
+
 
 				for(var groupName in groupsusers){
-					var _lineGroup = document.createElement('div'),
+/*					var _lineGroup = document.createElement('div'),
 					    _lineUsers = document.createElement('div'),
 					    _inputGroup = document.createElement('input'),
 					    _inputLabel = document.createElement('label'),
@@ -50,6 +59,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 						_inlineUser.appendChild(_inputUserLabel);
 						_lineUsers.appendChild(_inlineUser);
 					}
+*/
 					fragment.appendChild(_lineGroup);
 					fragment.appendChild(_lineUsers);
 					console.log(_lineGroup);
