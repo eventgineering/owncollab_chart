@@ -11,18 +11,15 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 				var fragment = document.createDocumentFragment();
 				var groupsusers = DataStore.get('groupsusers');
 				var deprecatedUsers = ['collab_user'];
-				var _table = document.createElement('table'),
-					_tableRow = document.createElement('tr'),
-					_tableHeader = document.createElement('th'),
-					_tableData = document.createElement('td');
-				_table.appendChild(_tableRow);
-				_tableHeader.innerHTML += '<b>test<b>';
-				_table.appendChild(_tableHeader);
-				console.log(_table);
-
+				var _table = document.createElement('table');
+				_table.innerHTML += '<thead><tr><th width="70%"><b>Group-/ Username</b></th><th width="30%"><b>Color</b></th></tr></thead>';
+				_table.innerHTML += '<tbody></tbody>';
+				_table.id = 'userlist';
+				_table.width = '100%';
+				var _tableRef = _table.getElementsByTagName('tbody')[0];
 
 				for(var groupName in groupsusers){
-/*					var _lineGroup = document.createElement('div'),
+					var _lineGroup = document.createElement('div'),
 					    _lineUsers = document.createElement('div'),
 					    _inputGroup = document.createElement('input'),
 					    _inputLabel = document.createElement('label'),
@@ -39,6 +36,10 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 					_inputGroup.id = 'group' + groupName;
 					_inputLabel.setAttribute('for', 'group' + groupName);
 					_inputLabel.innerHTML += ' <strong>' + Util.ucfirst(groupName) + '</strong>';
+					var rowCount = _tableRef.rows.length;
+					var row = _tableRef.insertRow(rowCount);
+					row.insertCell(0).innerHTML = '<b><i>' + Util.ucfirst(groupName) + '</i></b>';
+					row.insertCell(1).innerHTML = '1';
 
 					for(var i=0; i<usersCount; i++){
 						if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
@@ -58,18 +59,27 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 						_inlineUser.appendChild(_inputUser);
 						_inlineUser.appendChild(_inputUserLabel);
 						_lineUsers.appendChild(_inlineUser);
+						var rowCount = _tableRef.rows.length;
+						var row = _tableRef.insertRow(rowCount);
+						var uid = users[i]['uid'];
+						var colorId = 'col_' + uid;
+						row.insertCell(0).innerHTML = uid;
+						row.insertCell(1).innerHTML = '<input type="text" id="' + colorId +'" />';
 					}
-*/
-					fragment.appendChild(_lineGroup);
-					fragment.appendChild(_lineUsers);
-					console.log(_lineGroup);
-					console.log(_lineUsers);
-					$('#chart_coloring').append(_lineGroup);
-					$('#chart_coloring').append(_lineUsers);
+
 				}
+			$('#chart_coloring').append(_table);
 			});
 
-		        $("#col1").spectrum({
+
+			for(var groupName in groupsusers){
+				var users = groupsusers[groupName],
+				    usersCount =  users.length;
+
+				for(var i=0; i<usersCount; i++){
+					if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
+					var uid = users[i]['uid'];
+		        $("#col_" + uid).spectrum({
 		            color: "rgb(244, 204, 204)",    
 		            showPaletteOnly: true,
 		            palette: [
@@ -88,7 +98,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 		                "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
 		                "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
 		                ]
-		         });
+		         });	}}
 
 
 	        });
