@@ -19,7 +19,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 				var _tableRef = _table.getElementsByTagName('tbody')[0];
 
 				for(var groupName in groupsusers){
-/*					var _lineGroup = document.createElement('div'),
+					var _lineGroup = document.createElement('div'),
 					    _lineUsers = document.createElement('div'),
 					    _inputGroup = document.createElement('input'),
 					    _inputLabel = document.createElement('label'),
@@ -36,7 +36,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 					_inputGroup.id = 'group' + groupName;
 					_inputLabel.setAttribute('for', 'group' + groupName);
 					_inputLabel.innerHTML += ' <strong>' + Util.ucfirst(groupName) + '</strong>';
-*/					var rowCount = _tableRef.rows.length;
+					var rowCount = _tableRef.rows.length;
 					var row = _tableRef.insertRow(rowCount);
 					var colorId = 'col_g_' + groupName;
 					row.insertCell(0).innerHTML = '<b><i>' + Util.ucfirst(groupName) + '</i></b>';
@@ -44,7 +44,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 
 					for(var i=0; i<usersCount; i++){
 						if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
-/*						var _inlineUser = document.createElement('span'),
+						var _inlineUser = document.createElement('span'),
 						    _inputUser = document.createElement('input'),
 						    _inputUserLabel = document.createElement('label'),
 						    _inputUserSpan = document.createElement('span');
@@ -60,7 +60,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 						_inlineUser.appendChild(_inputUser);
 						_inlineUser.appendChild(_inputUserLabel);
 						_lineUsers.appendChild(_inlineUser);
-*/						var rowCount = _tableRef.rows.length;
+						var rowCount = _tableRef.rows.length;
 						var row = _tableRef.insertRow(rowCount);
 						var uid = users[i]['uid'];
 						var colorId = 'col_u_' + uid;
