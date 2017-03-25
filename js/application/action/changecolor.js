@@ -75,7 +75,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 				var users = groupsusers[groupName],
 				    usersCount =  users.length;
 
-					$("#col_g_" + uid).spectrum({
+					$("#col_g_" + groupName).spectrum({
 		            color: "rgb(244, 204, 204)",    
 		            showPaletteOnly: true,
 		            palette: [
