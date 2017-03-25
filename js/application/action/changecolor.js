@@ -7,6 +7,7 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 		$(document).ready(function () {
 
 			$('#sidebar_tab_3').click(function () {
+				if ($('#userlist').length == 0) {
 				var DataStore = App.Module.DataStore;
 				var fragment = document.createDocumentFragment();
 				var groupsusers = DataStore.get('groupsusers');
@@ -67,9 +68,9 @@ if(App.namespace) { App.namespace('Action.Changecolor', function(App) {
 						row.insertCell(0).innerHTML = uid;
 						row.insertCell(1).innerHTML = '<input type="text" id="' + colorId +'" />';
 					}
-
+				$('#chart_coloring').append(_table);
 				}
-			$('#chart_coloring').append(_table);
+			}
 
 			for(var groupName in groupsusers){
 				var users = groupsusers[groupName],
