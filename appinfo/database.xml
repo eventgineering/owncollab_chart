@@ -120,12 +120,6 @@
             </field>
         </declaration>
     </table>
-
-
-
-
-
-
     <table>
         <name>*dbprefix*collab_links</name>
         <declaration>
@@ -166,11 +160,6 @@
             </field>
         </declaration>
     </table>
-
-
-
-
-
     <table>
         <name>*dbprefix*collab_tasks</name>
         <declaration>
@@ -272,5 +261,25 @@
             </field>
         </declaration>
     </table>
+    <table>
+        <name>*dbprefix*collab_usercolors</name>
+        <declaration>
+            <field>
+                <name>uid</name>
+                <type>varchar</type>
+                <length>64</length>
+                <notnull>true</notnull>
+                <primary>true</primary>
+            </field>
+            <field>
+                <name>colorcode</name>
+                <type>varchar</type>
+                <length>20</length>
+                <default>rgb(255, 255, 255)</default>
+                <notnull>false</notnull>
+            </field>
+        </declaration>
+    </table>
+
 
 </database>
