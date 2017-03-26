@@ -266,14 +266,14 @@
         <declaration>
             <field>
                 <name>uid</name>
-                <type>varchar</type>
+                <type>text</type>
                 <length>64</length>
                 <notnull>true</notnull>
                 <primary>true</primary>
             </field>
             <field>
                 <name>colorcode</name>
-                <type>varchar</type>
+                <type>text</type>
                 <length>20</length>
                 <default>rgb(255, 255, 255)</default>
                 <notnull>false</notnull>
