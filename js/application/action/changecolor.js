@@ -32,7 +32,6 @@ if (App.namespace) {
 				};
 
 				function renderColors() {
-					var DataStore = App.Module.DataStore;
 					var groupsusers = DataStore.get('groupsusers');
 					var deprecatedUsers = ['collab_user'];
 
@@ -166,6 +165,7 @@ if (App.namespace) {
 					user: 'new user',
 					colorcode: 'rgb(255, 255, 255)'
 				};
+				var DataStore = App.Module.DataStore;
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
