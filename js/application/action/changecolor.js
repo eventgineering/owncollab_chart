@@ -112,7 +112,7 @@ if (App.namespace) {
 							var uid = users[i]['uid'];
 							var arr = usercolors._usercolors;
 							console.log(uid);
-							var j = $.indexOf(arr[i]['uid']);
+							var j = arr.indexOf(users[i]['uid']);
 							
 							console.log(j);
 							if (j >= 0){
