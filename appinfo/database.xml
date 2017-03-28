@@ -265,7 +265,7 @@
         <name>*dbprefix*collab_usercolors</name>
         <declaration>
             <field>
-                <name>uid</name>
+                <name>user</name>
                 <type>text</type>
                 <length>64</length>
                 <notnull>true</notnull>

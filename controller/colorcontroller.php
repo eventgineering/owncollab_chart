@@ -41,9 +41,9 @@ class ColorController extends Controller {
      *
      * @param int $userId
      */
-    public function show($userId) {
-        return $this->handleNotFound(function () use ($userId) {
-            return $this->service->find($userId);
+    public function show($user) {
+        return $this->handleNotFound(function () use ($user) {
+            return $this->service->find($user);
         });
     }
 
@@ -53,8 +53,8 @@ class ColorController extends Controller {
      * @param string $userId
      * @param string $colorcode
      */
-    public function create($userId, $colorcode) {
-        return $this->service->create($userId, $colorcode);
+    public function create($user, $colorcode) {
+        return $this->service->create($user, $colorcode);
     }
 
     /**
@@ -63,9 +63,9 @@ class ColorController extends Controller {
      * @param int $id
      * @param string $color
      */
-    public function update($userId, $colorcode) {
-        return $this->handleNotFound(function () use ($userId, $colorcode) {
-            return $this->service->update($userId, $colorcode);
+    public function update($user, $colorcode) {
+        return $this->handleNotFound(function () use ($user, $colorcode) {
+            return $this->service->update($user, $colorcode);
         });
     }
 
@@ -74,9 +74,9 @@ class ColorController extends Controller {
      *
      * @param int $userId
      */
-    public function destroy($userId) {
-        return $this->handleNotFound(function () use ($userId) {
-            return $this->service->delete($userId);
+    public function destroy($user) {
+        return $this->handleNotFound(function () use ($user) {
+            return $this->service->delete($user);
         });
     }
 

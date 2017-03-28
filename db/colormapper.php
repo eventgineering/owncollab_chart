@@ -15,9 +15,9 @@ class ColorMapper extends Mapper {
         return $this->findEntities($sql);
     }
     
-    public function find($userId) {
-        $sql = 'SELECT * FROM *PREFIX*collab_usercolors WHERE uid = ?';
-        return $this->findEntity($sql, [$userId]);
+    public function find($user) {
+        $sql = 'SELECT * FROM *PREFIX*collab_usercolors WHERE user = ?';
+        return $this->findEntity($sql, [$user]);
     }
 
 }

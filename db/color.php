@@ -7,12 +7,12 @@ use OCP\AppFramework\Db\Entity;
 
 class Color extends Entity implements JsonSerializable {
 
-    protected $userId;
+    protected $user;
     protected $colorcode;
 
     public function jsonSerialize() {
         return [
-            'uid' => $this->userId,
+            'user' => $this->user,
             'colorcode' => $this->colorcode,
         ];
     }

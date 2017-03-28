@@ -31,9 +31,9 @@ class ColorService {
         }
     }
 
-    public function find($userId) {
+    public function find($user) {
         try {
-            return $this->mapper->find($userId);
+            return $this->mapper->find($user);
 
         // in order to be able to plug in different storage backends like files
         // for instance it is a good idea to turn storage related exceptions
@@ -44,16 +44,16 @@ class ColorService {
         }
     }
 
-    public function create($userId, $colorcode) {
+    public function create($user, $colorcode) {
         $color = new Color();
-        $color->setUserId($userId);
+        $color->setUser($user);
         $color->setColorcode($colorcode);
         return $this->mapper->insert($color);
     }
 
-    public function update($userId, $colorcode) {
+    public function update($user, $colorcode) {
         try {
-            $color = $this->mapper->find($userId);
+            $color = $this->mapper->find($user);
             $color->setColorcode($colorcode);
             return $this->mapper->update($color);
         } catch(Exception $e) {
@@ -61,9 +61,9 @@ class ColorService {
         }
     }
 
-    public function delete($userId) {
+    public function delete($user) {
         try {
-            $color = $this->mapper->find($userId);
+            $color = $this->mapper->find($user);
             $this->mapper->delete($color);
             return $color;
         } catch(Exception $e) {
