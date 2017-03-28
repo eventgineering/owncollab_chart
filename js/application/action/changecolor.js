@@ -16,7 +16,7 @@ if (App.namespace) {
 				Usercolors.prototype = {
 					load: function (user) {
 						var self = this;
-						this._events.forEach(function (usercolor) {
+						this._usercolors.forEach(function (usercolor) {
 							if (usercolor.user === user) {
 								usercolor.active = true;
 								self._activeUsercolor = usercolor;
@@ -85,6 +85,17 @@ if (App.namespace) {
 						var ccode1 = 'rgb(244, 204, 204)';
 						if (ccode.length !== 0){
 							ccode1 = ccode[0]['colorcode'];
+						}
+						if (ccode.length == 0){
+							var usercolor = {
+								user: 'g_'+groupName,
+								colorcode: 'rgb(244, 204, 204)'
+							};
+							usercolors.create(usercolor).done(function() {
+								console.log('saved');
+							}).fail(function () {
+								alert('Could not create usercolor for group' + groupName);
+							});
 						}
 							
 						$("#col_g_" + groupName).spectrum({
