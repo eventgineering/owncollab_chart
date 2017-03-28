@@ -4,35 +4,7 @@ if (App.namespace) {
 
 		(function (OC, window, $, undefined) {
 			'use strict';
-
-			$(document).ready(function () {
-
-				var Usercolors = function (baseUrl) {
-					this._baseUrl = baseUrl;
-					this._usercolors = [];
-					this._activeUsercolor = undefined;
-				};
-
-
-				Usercolors.prototype = {
-					getAll: function () {
-						return this._usercolors;
-					},
-					loadAll: function () {
-						var deferred = $.Deferred();
-						var self = this;
-						$.get(this._baseUrl).done(function (usercolors) {
-							self._activeUsercolor = undefined;
-							self._usercolors = usercolors;
-							deferred.resolve();
-						}).fail(function () {
-							deferred.reject();
-						});
-						return deferred.promise();
-					},
-				};
-
-				$.fn.renderColors = function () {
+							$.fn.renderColors = function(){
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
@@ -85,6 +57,34 @@ if (App.namespace) {
 					}
 				}
 
+
+
+			$(document).ready(function () {
+
+				var Usercolors = function (baseUrl) {
+					this._baseUrl = baseUrl;
+					this._usercolors = [];
+					this._activeUsercolor = undefined;
+				};
+
+
+				Usercolors.prototype = {
+					getAll: function () {
+						return this._usercolors;
+					},
+					loadAll: function () {
+						var deferred = $.Deferred();
+						var self = this;
+						$.get(this._baseUrl).done(function (usercolors) {
+							self._activeUsercolor = undefined;
+							self._usercolors = usercolors;
+							deferred.resolve();
+						}).fail(function () {
+							deferred.reject();
+						});
+						return deferred.promise();
+					},
+				};
 
 
 				$('#sidebar_tab_3').click(function () {
