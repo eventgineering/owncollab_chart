@@ -160,7 +160,13 @@ if (App.namespace) {
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
 					console.log(usercolors);
-					console.log(this._usercolors.getAll());
+					var View = function (usercolors) {
+						this._usercolors = usercolors;
+					}
+					View.prototype = {
+						var uc = template({usercolors: this._usercolors.getAll()});
+						console.log(uc);
+					}
 				}).fail(function () {
 					alert('Could not load usercolors');
 				});
