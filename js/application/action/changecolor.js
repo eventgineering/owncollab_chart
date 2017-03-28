@@ -114,7 +114,7 @@ if (App.namespace) {
 							var ccode1 = '';
 
 							var ccode = $.grep(arr, function (person) { return person.user == uid });
-							if ($.grep(arr, function (person) { return person.user == uid } !== -1 ){
+							if ($.grep(arr, function (person) { return person.user == uid )} !== -1 ){
 								console.log(person);
 							}
 
