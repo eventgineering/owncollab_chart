@@ -85,7 +85,7 @@ if (App.namespace) {
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
-
+							
 						$("#col_g_" + groupName).spectrum({
 							color: "rgb(244, 204, 204)",
 							showPaletteOnly: true,
@@ -110,6 +110,10 @@ if (App.namespace) {
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
+
+							var j = $.inArray( uid, usercolors._usercolors);
+							cosole.log(usercolors.usercolors[j][colorcode]);
+
 							$("#col_u_" + uid).spectrum({
 								color: "rgb(244, 204, 204)",
 								showPaletteOnly: true,
