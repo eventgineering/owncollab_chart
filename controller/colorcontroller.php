@@ -39,7 +39,7 @@ class ColorController extends Controller {
     /**
      * @NoAdminRequired
      *
-     * @param int $userId
+     * @param int $user
      */
     public function show($user) {
         return $this->handleNotFound(function () use ($user) {
@@ -50,7 +50,7 @@ class ColorController extends Controller {
     /**
      * @NoAdminRequired
      *
-     * @param string $userId
+     * @param string $user
      * @param string $colorcode
      */
     public function create($user, $colorcode) {
@@ -60,8 +60,8 @@ class ColorController extends Controller {
     /**
      * @NoAdminRequired
      *
-     * @param int $id
-     * @param string $color
+     * @param int $user
+     * @param string $colorcode
      */
     public function update($user, $colorcode) {
         return $this->handleNotFound(function () use ($user, $colorcode) {
@@ -72,7 +72,7 @@ class ColorController extends Controller {
     /**
      * @NoAdminRequired
      *
-     * @param int $userId
+     * @param int $user
      */
     public function destroy($user) {
         return $this->handleNotFound(function () use ($user) {
