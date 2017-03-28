@@ -7,6 +7,25 @@ if (App.namespace) {
 
 			$(document).ready(function () {
 
+				Usercolors.prototype = {
+					getAll: function () {
+						return this._usercolors;
+					},
+					loadAll: function () {
+						var deferred = $.Deferred();
+						var self = this;
+						$.get(this._baseUrl).done(function (usercolors) {
+							self._activeUsercolor = undefined;
+							self._usercolors = usercolors;
+							deferred.resolve();
+						}).fail(function () {
+							deferred.reject();
+						});
+						return deferred.promise();
+					},
+				};
+
+
 				$('#sidebar_tab_3').click(function () {
 					if ($('#userlist').length == 0) {
 						var DataStore = App.Module.DataStore;
@@ -124,6 +143,30 @@ if (App.namespace) {
 						}
 					}
 				});
+
+				var baseUrl = OC.generateUrl('apps/owncollab_chart');
+				var usercolor = {
+					user: 'new user',
+					colorcode: 'rgb(255, 255, 255)'
+				};
+
+				var Usercolors = function (baseUrl) {
+					this._baseUrl = baseUrl;
+					this._usercolors = [];
+					this._activeUsercolor = undefined;
+				};
+				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
+				events.loadAll().done(function () {
+				}).fail(function () {
+					alert('Could not load events');
+				});
+				$getJSON(usercolors, function(result){
+					var items="";
+					$each(result, function(i, data){
+						console.log('uid:' + data.uid + 'color:' + data.colorcode)
+					});
+				});
+
 
 			});
 		})(OC, window, jQuery);
