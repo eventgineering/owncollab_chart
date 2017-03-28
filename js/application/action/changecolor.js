@@ -87,7 +87,13 @@ if (App.namespace) {
 							usersCount = users.length;
 							
 						$("#col_g_" + groupName).spectrum({
-							color: "rgb(244, 204, 204)",
+							var arr = usercolors._usercolors;
+							var ccode = $.grep(arr, function (person) { return person.user == 'g_'+uid });
+							var ccode1 = 'rgb(244, 204, 204)';
+							if (ccode.length !== 0) {
+								ccode1 = ccode[0]['colorcode'];
+							}
+							color: ccode1,
 							showPaletteOnly: true,
 							palette: [
 								["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
