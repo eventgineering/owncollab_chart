@@ -162,7 +162,7 @@ if (App.namespace) {
 				}).fail(function () {
 					alert('Could not load events');
 				});
-				$getJSON(usercolors, function(result){
+				$.getJSON(usercolors, function(result){
 					var items="";
 					$each(result, function(i, data){
 						console.log('uid:' + data.uid + 'color:' + data.colorcode)
