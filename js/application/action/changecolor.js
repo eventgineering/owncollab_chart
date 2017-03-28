@@ -77,11 +77,6 @@ if (App.namespace) {
 				function renderColors() {
 					var groupsusers = DataStore.get('groupsusers');
 					var deprecatedUsers = ['collab_user'];
-
-					$.each(usercolors._usercolors, function (i, data) {
-						console.log('username: ' + data.user + ' color: ' + data.colorcode);
-					});
-
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
@@ -152,7 +147,6 @@ if (App.namespace) {
 					if ($('#userlist').length == 0) {
 						var fragment = document.createDocumentFragment();
 						var groupsusers = DataStore.get('groupsusers');
-						console.log(groupsusers);
 						var deprecatedUsers = ['collab_user'];
 						var _table = document.createElement('table');
 						_table.innerHTML += '<thead><tr><th width="70%"><b>Group-/ Username</b></th><th width="30%"><b>Color</b></th></tr></thead>';
@@ -178,11 +172,11 @@ if (App.namespace) {
 							_lineGroup.appendChild(_inputLabel);
 							_inputGroup.id = 'group' + groupName;
 							_inputLabel.setAttribute('for', 'group' + groupName);
-							_inputLabel.innerHTML += ' <strong>' + Util.ucfirst(groupName) + '</strong>';
+							_inputLabel.innerHTML += ' <strong>' + groupName + '</strong>';
 							var rowCount = _tableRef.rows.length;
 							var row = _tableRef.insertRow(rowCount);
 							var colorId = 'col_g_' + groupName;
-							row.insertCell(0).innerHTML = '<b><i>' + Util.ucfirst(groupName) + '</i></b>';
+							row.insertCell(0).innerHTML = '<b><i>' + groupName + '</i></b>';
 							row.insertCell(1).innerHTML = '<input type="text" id="' + colorId + '" />';
 
 							for (var i = 0; i < usersCount; i++) {
@@ -226,9 +220,6 @@ if (App.namespace) {
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
 					renderColors();
-					$.each(usercolors._usercolors, function (i, data) {
-						console.log('username: ' + data.user + ' color: ' + data.colorcode);
-					});
 				}).fail(function () {
 					alert('Could not load usercolors');
 				});
