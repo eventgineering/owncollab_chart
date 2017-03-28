@@ -110,9 +110,12 @@ if (App.namespace) {
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
-							var arr = usercolors._usercolors.user;
+							var arr = usercolors._usercolors;
 							console.log(uid);
-							var j = arr.indexOf(uid);
+							var j = $.grep(arr, function(element, index){
+								return element.user == uid;
+							});
+							
 							console.log(j);
 							if (j >= 0){
 								console.log(arr[j]['colorcode']);
