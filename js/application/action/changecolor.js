@@ -36,6 +36,7 @@ if (App.namespace) {
 					var DataStore = App.Module.DataStore;
 					var groupsusers = DataStore.get('groupsusers');
 					var deprecatedUsers = ['collab_user'];
+					console.log(this.usercolors)
 
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
