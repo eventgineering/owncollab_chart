@@ -14,6 +14,38 @@ if (App.namespace) {
 				};
 
 				Usercolors.prototype = {
+					load: function (user) {
+						var self = this;
+						this._events.forEach(function (usercolor) {
+							if (usercolor.user === user) {
+								usercolor.active = true;
+								self._activeUsercolor = usercolor;
+							} else {
+								usercolor.active = false;
+							}
+						});
+					},
+					getActive: function () {
+						return this._activeUsercolor;
+					},
+					create: function (usercolor) {
+						var deferred = $.Deferred();
+						var self = this;
+						$.ajax({
+							url: this._baseUrl,
+							method: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify(usercolor)
+						}).done(function (event) {
+							self._usercolors.push(usercolor);
+							self._activeUsercolor = usercolor;
+							self.load(usercolor.user);
+							deferred.resolve();
+						}).fail(function () {
+							deferred.reject();
+						});
+						return deferred.promise();
+					},
 					getAll: function () {
 						return this._usercolors;
 					},
@@ -29,6 +61,17 @@ if (App.namespace) {
 						});
 						return deferred.promise();
 					},
+					updateActive: function (colorcode) {
+						var usercolor = this.getActive();
+						usercolor.colorcode = colorcode;
+						return $.ajax({
+							url: this._baseUrl + '/' + usercolor.user,
+							method: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify(usercolor)
+						});
+					}
+
 				};
 
 				function renderColors() {
