@@ -32,7 +32,7 @@ if (App.namespace) {
 					},
 				};
 
-				$.fn.renderColors = function () {
+				function renderColors() {
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
@@ -152,7 +152,7 @@ if (App.namespace) {
 							$('#chart_coloring').append(_table);
 						}
 					}
-					$.renderColors();
+					renderColors();
 				});
 
 				var baseUrl = OC.generateUrl('apps/owncollab_chart');
@@ -163,7 +163,7 @@ if (App.namespace) {
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
-					$.renderColors();
+					renderColors();
 					$.each(usercolors._usercolors, function (i, data) {
 						console.log('username: ' + data.user + ' color: ' + data.colorcode);
 					});
