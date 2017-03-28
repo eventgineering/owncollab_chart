@@ -85,14 +85,14 @@ if (App.namespace) {
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
+						var arr = usercolors._usercolors;
+						var ccode = $.grep(arr, function (group) { return group.user == 'g_' +groupName });
+						var ccode1 = 'rgb(244, 204, 204)';
+						if (ccode.length !== 0){
+							ccode1 = ccode[0]['colorcode'];
+						}
 							
 						$("#col_g_" + groupName).spectrum({
-							var arr = usercolors._usercolors;
-							var ccode = $.grep(arr, function (person) { return person.user == 'g_'+uid });
-							var ccode1 = 'rgb(244, 204, 204)';
-							if (ccode.length !== 0) {
-								ccode1 = ccode[0]['colorcode'];
-							}
 							color: ccode1,
 							showPaletteOnly: true,
 							palette: [
