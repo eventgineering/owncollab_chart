@@ -100,7 +100,7 @@ if (App.namespace) {
 					}
 
 
-					$.fn.renderColors = function() {
+					$.fn.renderColors function() {
 						for (var groupName in groupsusers) {
 							var users = groupsusers[groupName],
 								usersCount = users.length;
