@@ -110,7 +110,7 @@ if (App.namespace) {
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
-
+							console.log(uid);
 							var j = $.inArray( uid, usercolors._usercolors);
 							console.log(usercolors._usercolors);
 							console.log(j);
