@@ -86,6 +86,7 @@ if (App.namespace) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
 						var arr = usercolors._usercolors;
+						var gname = 'g_'+groupName;
 						var ccode = $.grep(arr, function (group) { return group.user == 'g_' +groupName });
 						console.log(ccode);
 						var ccode1 = 'rgb(244, 204, 204)';
