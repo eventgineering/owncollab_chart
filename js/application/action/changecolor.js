@@ -166,7 +166,7 @@ if (App.namespace) {
 				$.getJSON(baseUrl + '/colors', function(result){
 					var items="";
 					$.each(result, function(i, data){
-						console.log('uid:' + data.uid + 'color:' + data.colorcode)
+						console.log('uid:' + data.user + ' color:' + data.colorcode)
 					});
 				});
 
