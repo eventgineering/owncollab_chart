@@ -113,7 +113,8 @@ if (App.namespace) {
 
 							var j = $.inArray( uid, usercolors._usercolors);
 							console.log(usercolors._usercolors);
-							console.log(usercolors._usercolors[j][colorcode]);
+							console.log(j);
+							console.log(usercolors._usercolors[j]['colorcode']);
 
 							$("#col_u_" + uid).spectrum({
 								color: "rgb(244, 204, 204)",
