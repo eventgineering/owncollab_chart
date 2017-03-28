@@ -32,6 +32,10 @@ if (App.namespace) {
 				};
 
 				function renderColors() {
+					var DataStore = App.Module.DataStore;
+					var groupsusers = DataStore.get('groupsusers');
+					var deprecatedUsers = ['collab_user'];
+
 					$.each(usercolors._usercolors, function (i, data) {
 						console.log('username: ' + data.user + ' color: ' + data.colorcode);
 					});
@@ -162,10 +166,6 @@ if (App.namespace) {
 					user: 'new user',
 					colorcode: 'rgb(255, 255, 255)'
 				};
-				var DataStore = App.Module.DataStore;
-				var groupsusers = DataStore.get('groupsusers');
-				var deprecatedUsers = ['collab_user'];
-
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
