@@ -81,23 +81,22 @@ if (App.namespace) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
 						var arr = usercolors._usercolors;
-						var ccode = $.grep(arr, function (group) { return group.user == 'g_' +groupName });
-						var ccode1 = 'rgb(244, 204, 204)';
-						if (ccode.length !== 0){
-							ccode1 = ccode[0]['colorcode'];
-						}
-						if (ccode.length == 0){
+						var ccode = $.grep(arr, function (group) { return group.user == 'g_' + groupName });
+						var ccode1 = 'rgb(75, 113, 164)';
+						if (ccode.length == 0) {
 							var usercolor = {
-								user: 'g_'+groupName,
-								colorcode: 'rgb(244, 204, 204)'
+								user: 'g_' + groupName,
+								colorcode: 'rgb(75, 113, 164)'
 							};
-							usercolors.create(usercolor).done(function() {
+							usercolors.create(usercolor).done(function () {
 								console.log('saved');
 							}).fail(function () {
 								alert('Could not create usercolor for group' + groupName);
 							});
+						} else {
+							ccode1 = ccode[0]['colorcode'];
 						}
-							
+
 						$("#col_g_" + groupName).spectrum({
 							color: ccode1,
 							showPaletteOnly: true,
@@ -123,9 +122,19 @@ if (App.namespace) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
 							var arr = usercolors._usercolors;
-							var ccode = $.grep(arr, function (person) { return person.user == 'u_'+uid });
-							var ccode1 = 'rgb(244, 204, 204)';
-							if (ccode.length !== 0) {
+							var ccode = $.grep(arr, function (person) { return person.user == 'u_' + uid });
+							var ccode1 = 'rgb(75, 113, 164)';
+							if (ccode.length == 0) {
+								var usercolor = {
+									user: 'u_' + uid,
+									colorcode: 'rgb(75, 113, 164)'
+								};
+								usercolors.create(usercolor).done(function () {
+									console.log('saved');
+								}).fail(function () {
+									alert('Could not create usercolor for user' + uid);
+								});
+							} else {
 								ccode1 = ccode[0]['colorcode'];
 							}
 							$("#col_u_" + uid).spectrum({
