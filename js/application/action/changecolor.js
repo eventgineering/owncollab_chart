@@ -33,6 +33,10 @@ if (App.namespace) {
 				};
 
 				function renderColors() {
+					var DataStore = App.Module.DataStore;
+					var groupsusers = DataStore.get('groupsusers');
+					var deprecatedUsers = ['collab_user'];
+
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
