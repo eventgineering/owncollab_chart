@@ -158,7 +158,7 @@ if (App.namespace) {
 				};
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
-				events.loadAll().done(function () {
+				usercolors.loadAll().done(function () {
 				}).fail(function () {
 					alert('Could not load events');
 				});
