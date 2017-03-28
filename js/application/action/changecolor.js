@@ -52,6 +52,7 @@ if (App.namespace) {
 					loadAll: function () {
 						var deferred = $.Deferred();
 						var self = this;
+						console.log(this._baseUrl);
 						$.get(this._baseUrl).done(function (usercolors) {
 							self._activeUsercolor = undefined;
 							self._usercolors = usercolors;
@@ -70,8 +71,21 @@ if (App.namespace) {
 							contentType: 'application/json',
 							data: JSON.stringify(usercolor)
 						});
+					},
+					update: function (user, colorcode) {
+						var self = this;
+						this._usercolors.forEach(function (usercolor) {
+							if (usercolor.user === user){
+								usercolor.colorcode = colorcode;
+								return $.ajax({
+									url: usercolors._baseUrl + '/' + usercolor.user,
+									method: 'PUT',
+									contentType: 'application/json',
+									data: JSON.stringify(usercolor)
+								});
+							}
+						});
 					}
-
 				};
 
 				function renderColors() {
@@ -100,6 +114,7 @@ if (App.namespace) {
 						$("#col_g_" + groupName).spectrum({
 							color: ccode1,
 							showPaletteOnly: true,
+							hideAfterPaletteSelect: true,
 							palette: [
 								["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
 									"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
@@ -121,8 +136,9 @@ if (App.namespace) {
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
+							var userString = 'u_' + users[i]['uid']
 							var arr = usercolors._usercolors;
-							var ccode = $.grep(arr, function (person) { return person.user == 'u_' + uid });
+							var ccode = $.grep(arr, function (person) { return person.user == userString });
 							var ccode1 = 'rgb(75, 113, 164)';
 							if (ccode.length == 0) {
 								var usercolor = {
@@ -137,9 +153,15 @@ if (App.namespace) {
 							} else {
 								ccode1 = ccode[0]['colorcode'];
 							}
-							$("#col_u_" + uid).spectrum({
+							$("#col_" + userString).spectrum({
 								color: ccode1,
 								showPaletteOnly: true,
+								hideAfterPaletteSelect: true,
+								change: function(changeColor) {
+									var userString2 = $(this).prop("id").replace('col_', '');
+									var colorString = changeColor.toRgbString();
+									usercolors.update(userString2, colorString);
+									},
 								palette: [
 									["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
 										"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
