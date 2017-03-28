@@ -110,12 +110,12 @@ if (App.namespace) {
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
+							var arr = usercolors._usercolors;
 							console.log(uid);
-							var j = $.inArray( uid, usercolors._usercolors);
-							console.log(usercolors._usercolors);
+							var j = $.inArray( uid, arr);
 							console.log(j);
 							if (j >= 0){
-								console.log(usercolors._usercolors[j]['colorcode']);
+								console.log(arr[j]['colorcode']);
 							};
 
 							$("#col_u_" + uid).spectrum({
