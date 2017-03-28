@@ -37,8 +37,8 @@ if (App.namespace) {
 					var groupsusers = DataStore.get('groupsusers');
 					var deprecatedUsers = ['collab_user'];
 					$.each(usercolors._usercolors, function (i, data) {
-					console.log('username: ' + data.user + ' color: ' + data.colorcode);
-
+						console.log('username: ' + data.user + ' color: ' + data.colorcode);
+					});
 
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
