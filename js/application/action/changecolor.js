@@ -159,17 +159,19 @@ if (App.namespace) {
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
-					console.log(usercolors);
+					$.each(usercolors._usercolors, function(i, data){
+						console.log('username: ' + data.user + ' color: ' + data.colorcode);
+					});
 				}).fail(function () {
 					alert('Could not load usercolors');
 				});
-				console.log(baseUrl);
-				$.getJSON(baseUrl + '/colors', function(result){
-					var items="";
-					$.each(result, function(i, data){
-						console.log('uid:' + data.user + ' color:' + data.colorcode)
-					});
-				});
+//				console.log(baseUrl);
+//				$.getJSON(baseUrl + '/colors', function(result){
+//					var items="";
+//					$.each(result, function(i, data){
+//						console.log('uid:' + data.user + ' color:' + data.colorcode)
+//					});
+//				});
 
 
 			});
