@@ -13,12 +13,6 @@ if (App.namespace) {
 					this._activeUsercolor = undefined;
 				};
 
-				var DataStore = App.Module.DataStore;
-				var groupsusers = DataStore.get('groupsusers');
-				var deprecatedUsers = ['collab_user'];
-
-
-
 				Usercolors.prototype = {
 					getAll: function () {
 						return this._usercolors;
@@ -99,6 +93,8 @@ if (App.namespace) {
 				$('#sidebar_tab_3').click(function () {
 					if ($('#userlist').length == 0) {
 						var fragment = document.createDocumentFragment();
+						var groupsusers = DataStore.get('groupsusers');
+						var deprecatedUsers = ['collab_user'];
 						var _table = document.createElement('table');
 						_table.innerHTML += '<thead><tr><th width="70%"><b>Group-/ Username</b></th><th width="30%"><b>Color</b></th></tr></thead>';
 						_table.innerHTML += '<tbody></tbody>';
@@ -166,6 +162,10 @@ if (App.namespace) {
 					user: 'new user',
 					colorcode: 'rgb(255, 255, 255)'
 				};
+				var DataStore = App.Module.DataStore;
+				var groupsusers = DataStore.get('groupsusers');
+				var deprecatedUsers = ['collab_user'];
+
 
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
