@@ -112,11 +112,7 @@ if (App.namespace) {
 							var uid = users[i]['uid'];
 							var arr = usercolors._usercolors;
 
-							j = arr.filter(function(ccode) {
-								return ccode.user == uid
-							});
-							console.log(j);
-							console.log(j[0]['colorcode']);
+							console.log($.grep(arr, function (person) { return person.user == uid }));
 
 							$("#col_u_" + uid).spectrum({
 								color: "rgb(244, 204, 204)",
