@@ -6,6 +6,13 @@ if (App.namespace) {
 			'use strict';
 
 			$(document).ready(function () {
+				
+				var Usercolors = function (baseUrl) {
+					this._baseUrl = baseUrl;
+					this._usercolors = [];
+					this._activeUsercolor = undefined;
+				};
+
 
 				Usercolors.prototype = {
 					getAll: function () {
@@ -150,11 +157,6 @@ if (App.namespace) {
 					colorcode: 'rgb(255, 255, 255)'
 				};
 
-				var Usercolors = function (baseUrl) {
-					this._baseUrl = baseUrl;
-					this._usercolors = [];
-					this._activeUsercolor = undefined;
-				};
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				events.loadAll().done(function () {
 				}).fail(function () {
