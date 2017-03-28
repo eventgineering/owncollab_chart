@@ -111,13 +111,12 @@ if (App.namespace) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
 							var arr = usercolors._usercolors;
-							console.log(uid);
-							var j = arr[i]['user'].indexOf(users[i]['uid']);
-							console.log(users[i]['uid']);
+
+							j = arr.filter(function(ccode) {
+								return ccode.user == uid
+							});
 							console.log(j);
-							if (j >= 0){
-								console.log(arr[j]['colorcode']);
-							};
+							console.log(j[0]['colorcode']);
 
 							$("#col_u_" + uid).spectrum({
 								color: "rgb(244, 204, 204)",
