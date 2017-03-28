@@ -6,8 +6,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\OwnCollab_TimeTracker\Db\Color;
-use OCA\OwnCollab_TimeTracker\Db\ColorMapper;
+use OCA\Owncollab_Chart\Db\Color;
+use OCA\OwnCollab_Chart\Db\ColorMapper;
 
 
 class ColorService {
