@@ -160,9 +160,9 @@ if (App.namespace) {
 				var usercolors = new Usercolors(OC.generateUrl('/apps/owncollab_chart/colors'));
 				usercolors.loadAll().done(function () {
 					console.log(usercolors);
-					console.log(this._events.getAll());
+					console.log(this._usercolors.getAll());
 				}).fail(function () {
-					alert('Could not load events');
+					alert('Could not load usercolors');
 				});
 				console.log(baseUrl);
 				$.getJSON(baseUrl + '/colors', function(result){
