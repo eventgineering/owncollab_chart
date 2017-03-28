@@ -10,14 +10,6 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Owncollab_Chart\Db\Color;
 use OCA\OwnCollab_Chart\Db\ColorMapper;
 
-function debug_to_console( $data ) {
-    $output = $data;
-    if ( is_array( $output ) )
-        $output = implode( ',', $output);
-
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
-}
-
 class ColorService {
 
     private $mapper;
@@ -62,7 +54,7 @@ class ColorService {
     public function update($user, $colorcode) {
         try {
             $color = $this->mapper->find($user);
-            debug_to_console($user);
+            echo "<script>console.log( " . $user . " );</script>";
             $color->setColorcode($colorcode);
             return $this->mapper->update($color);
         } catch(Exception $e) {
