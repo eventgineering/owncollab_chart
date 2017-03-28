@@ -77,7 +77,6 @@ if (App.namespace) {
 						this._usercolors.forEach(function (usercolor) {
 							if (usercolor.user === user){
 								usercolor.colorcode = colorcode;
-								console.log(usercolor);
 								return $.ajax({
 									url: usercolors._baseUrl + '/' + usercolor.user,
 									method: 'PUT',
