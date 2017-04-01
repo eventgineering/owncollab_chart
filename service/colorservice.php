@@ -53,9 +53,9 @@ class ColorService {
 
     public function update($user, $colorcode) {
         try {
-            $color = $this->mapper->find($user);
-            $color->setColorcode($colorcode);
-            return $this->mapper->update($color);
+	    $query = \OC_DB::prepare('UPDATE `*PREFIX*collab_usercolors` SET colorcode="'.$colorcode.'" WHERE user="'.$user.'"');
+	    $result = $query->execute();
+	    return $result;
         } catch(Exception $e) {
             $this->handleException($e);
         }

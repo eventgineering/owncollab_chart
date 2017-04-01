@@ -52,7 +52,6 @@ if (App.namespace) {
 					loadAll: function () {
 						var deferred = $.Deferred();
 						var self = this;
-						console.log(this._baseUrl);
 						$.get(this._baseUrl).done(function (usercolors) {
 							self._activeUsercolor = undefined;
 							self._usercolors = usercolors;
@@ -77,7 +76,6 @@ if (App.namespace) {
 						this._usercolors.forEach(function (usercolor) {
 							if (usercolor.user === user){
 								usercolor.colorcode = colorcode;
-								console.log(usercolor);
 								return $.ajax({
 									url: usercolors._baseUrl + '/' + usercolor.user,
 									method: 'PUT',
