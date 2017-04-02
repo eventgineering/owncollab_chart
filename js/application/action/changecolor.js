@@ -120,11 +120,12 @@ if (App.namespace) {
 									usercolors.update(userString2, colorString);
 									var tempTasks = $.grep(App.Action.Chart.states, function(data) {return data.users != null && data.users != ""});
 									$.each(tempTasks, function(id, taskObject){
-										var obj = JSON.parse(taskObject.users);
+										App.Action.Chart.updateUserColors(id, taskObject, userString2.replace('g_', ''), colorString);
+/*										var obj = JSON.parse(taskObject.users);
 										var taskId = taskObject.id;
 										if(obj.groups[0] == userString2.replace('g_', '')){
 										$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", colorString);
-										 }
+										 }*/
 									});
 								},
 
@@ -176,11 +177,12 @@ if (App.namespace) {
 									usercolors.update(userString2, colorString);
 									var tempTasks = $.grep(App.Action.Chart.states, function(data) {return data.users != null && data.users != ""});
 									$.each(tempTasks, function(id, taskObject){
-										var obj = JSON.parse(taskObject.users);
+										App.Action.Chart.updateUserColors(id, taskObject, userString2.replace('u_', ''), colorString);
+/*										var obj = JSON.parse(taskObject.users);
 										var taskId = taskObject.id;
 										if(!obj.groups[0] && obj.users[0] == userString2.replace('u_', '')){
 										$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", colorString);
-										 }
+										 }*/
 									});
 									},
 								palette: [

@@ -12,6 +12,7 @@ if (App.namespace) {
         var GanttExt = App.Action.GanttExt;
         var Sidebar = App.Action.Sidebar;
         var Lightbox = App.Action.Lightbox;
+	var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
 
         /**
          * @namespace App.Action.Chart
@@ -31,11 +32,44 @@ if (App.namespace) {
         };
         chart.states = [];
 
-        var userColors = [];
-        var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
-        $.getJSON(baseUrl, function (data) {
-            userColors = data;
-        });
+	/**
+	 * @namespace App.Action.Chart.userColors
+	 * @type {*}
+	 */
+        chart.userColors = [];
+
+	/**
+	 * @namespace App.Action.Chart.refreshUserColors
+	 * @param url
+	 */
+	chart.refreshUserColors = function(url) {
+		$.getJSON(url, function (data) {
+            	chart.userColors = data;
+		});
+        };
+	chart.refreshUserColors(baseUrl);
+	
+	/**
+	 * @namespace App.Action.Chart.updateUserColors
+	 * @param id
+	 * @param taskObject
+	 * @param user
+	 * @param color
+	 */
+	chart.updateUserColors = function (id, taskObject, user, color) {
+		var obj = JSON.parse(taskObject.users);
+		var taskId = taskObject.id;
+		if (user) {
+			if(obj.groups[0] == user){
+				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", color);
+			}
+			if(!obj.groups[0] && obj.users[0] == user){
+				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", color);
+			}
+		}else{
+		}
+		
+	};
 
         /**
          * @namespace App.Action.Chart.readySave
@@ -49,6 +83,26 @@ if (App.namespace) {
          */
         chart.readyRequest = true;
 
+	/**
+	 * @namespace App.Action.Chart.getUserColor
+	 * @param id
+	 * @param taskObject
+	 */
+	chart.getUserColor = function (id, taskObject) {
+		if (taskObject.users) {
+			var obj = JSON.parse(taskObject.users);
+			if (obj.groups[0]) {
+				var groups = obj.groups[0];
+				var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
+				taskObject.color = groupColor[0].colorcode;
+			}
+			if (obj.users[0]) {
+				var users = obj.users[0];
+				var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
+				taskObject.color = userColor[0].colorcode;
+			}
+		}
+	};
         /**
          * @namespace App.Action.Chart.init
          * @param contentElement
@@ -61,21 +115,26 @@ if (App.namespace) {
             var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
             chart.contentElement = contentElement;
             chart.tasks = DataStore.get('tasks');
+	    console.log(chart.userColors);
             $.each(chart.tasks, function (id, taskObject) {
-                if (taskObject.users) {
+		console.log(chart.tasks[id]);
+// commented out while testing, because of outsourcing to function chart.getUserColor
+
+/*                if (taskObject.users) {
                     var obj = JSON.parse(taskObject.users);
                     if (obj.groups[0]) {
                         var groups = obj.groups[0];
-                        var groupColor = $.grep(userColors, function (color) { return color.user == 'g_' + groups });
+                        var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
                         taskObject.color = groupColor[0].colorcode;
                     }
                     if (obj.users[0]) {
                         var users = obj.users[0];
-                        var userColor = $.grep(userColors, function (color) { return color.user == 'u_' + users });
+                        var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
                         taskObject.color = userColor[0].colorcode;
                     }
 
-                }
+                } */
+	    	chart.getUserColor(id, taskObject);
             });
             chart.links = DataStore.get('links');
 

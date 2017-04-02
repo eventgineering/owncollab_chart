@@ -223,7 +223,6 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
             name = target['name'].substr(5),
             value = target['value'],
             type = target['type'];
-
         if(lbox.task[name] !== undefined){
             lbox.task[name] = value;
         }
@@ -410,7 +409,7 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
     lbox.onLightboxSave = function (id, task, is_new){
         App.Action.Chart.readySave = true;
         App.Action.Chart.readyRequest = true;
-
+	console.log(lbox.task);
         /*
         var _id = null;
         // after entry in the database, you need to update the id
