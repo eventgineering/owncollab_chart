@@ -28,8 +28,13 @@ if(App.namespace) { App.namespace('Action.Chart', function(App) {
         zoomSliderValue: 4,
         isInit: false
     };
-
     chart.states = [];
+
+    var userColors = [];
+    var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
+    $.getJSON(baseUrl, function (data){
+		userColors = data;
+    });
 
     /**
      * @namespace App.Action.Chart.readySave
@@ -51,8 +56,26 @@ if(App.namespace) { App.namespace('Action.Chart', function(App) {
      */
     chart.init = function (contentElement, callbackGanttReady, callbackGanttLoaded){
 
+
+	var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
         chart.contentElement = contentElement;
         chart.tasks = DataStore.get('tasks');
+	$.each( chart.tasks, function(id, taskObject){
+		if (taskObject.users){
+			var obj = JSON.parse(taskObject.users);
+			if (obj.groups[0]){
+				var groups = obj.groups[0];
+				var groupColor = $.grep(userColors, function(color) { return color.user == 'g_' + groups });
+				taskObject.color = groupColor[0].colorcode;
+			}
+			if (obj.users[0]){
+                                var users = obj.users[0];
+				var userColor = $.grep(userColors, function(color) { return color.user == 'u_' + users });
+				taskObject.color = userColor[0].colorcode;
+                        }
+
+		}
+	 });
         chart.links = DataStore.get('links');
 
         chart.ganttInit(callbackGanttReady, callbackGanttLoaded);
