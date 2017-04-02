@@ -114,6 +114,12 @@ if (App.namespace) {
 							color: ccode1,
 							showPaletteOnly: true,
 							hideAfterPaletteSelect: true,
+							change: function(changeColor) {
+									var userString2 = $(this).prop("id").replace('col_', '');
+									var colorString = changeColor.toRgbString();
+									usercolors.update(userString2, colorString);
+									},
+
 							palette: [
 								["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
 									"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
@@ -160,6 +166,8 @@ if (App.namespace) {
 									var userString2 = $(this).prop("id").replace('col_', '');
 									var colorString = changeColor.toRgbString();
 									usercolors.update(userString2, colorString);
+									var temptasks = gantt.getTask();
+									console.log(temptasks);
 									},
 								palette: [
 									["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
