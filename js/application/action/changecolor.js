@@ -118,7 +118,15 @@ if (App.namespace) {
 									var userString2 = $(this).prop("id").replace('col_', '');
 									var colorString = changeColor.toRgbString();
 									usercolors.update(userString2, colorString);
-									},
+									var tempTasks = $.grep(App.Action.Chart.states, function(data) {return data.users != null && data.users != ""});
+									$.each(tempTasks, function(id, taskObject){
+										var obj = JSON.parse(taskObject.users);
+										var taskId = taskObject.id;
+										if(obj.groups[0] == userString2.replace('g_', '')){
+										$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", colorString);
+										 }
+									});
+								},
 
 							palette: [
 								["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
