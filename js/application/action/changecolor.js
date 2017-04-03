@@ -73,6 +73,12 @@ if (App.namespace) {
 					},
 					update: function (user, colorcode) {
 						var self = this;
+						$(App.Action.Chart.userColors).each( function () {
+							if (this.user == user) this.colorcode = colorcode;
+						});
+						$.each(App.Action.Chart.tasks, function (id, taskObject) {
+							App.Action.Chart.getUserColor(id, taskObject);
+						});
 						this._usercolors.forEach(function (usercolor) {
 							if (usercolor.user === user){
 								usercolor.colorcode = colorcode;

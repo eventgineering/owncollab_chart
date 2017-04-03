@@ -67,8 +67,22 @@ if (App.namespace) {
 				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", color);
 			}
 		}else{
+			if(obj.groups[0]){
+				console.log('user not set and existing group');
+				var groups = obj.groups[0];
+				var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
+				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", groupColor);
+			}
+			if(!obj.groups[0] && obj.users[0]){
+				console.log('user not set and no existing group');
+				var users = obj.users[0];
+				var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
+				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", userColor[0].colorcode);
+			}
 		}
-		
+		$.each(chart.tasks, function (id, taskObject){
+			chart.getUserColor(id, taskObject);
+		});
 	};
 
         /**
@@ -95,12 +109,15 @@ if (App.namespace) {
 				var groups = obj.groups[0];
 				var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
 				taskObject.color = groupColor[0].colorcode;
-			}
-			if (obj.users[0]) {
+			} else if (obj.users[0]) {
 				var users = obj.users[0];
 				var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
 				taskObject.color = userColor[0].colorcode;
+			} else {
+				taskObject.color = '';
 			}
+		} else {
+			taskObject.color = '';
 		}
 	};
         /**
@@ -115,9 +132,7 @@ if (App.namespace) {
             var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
             chart.contentElement = contentElement;
             chart.tasks = DataStore.get('tasks');
-	    console.log(chart.userColors);
             $.each(chart.tasks, function (id, taskObject) {
-		console.log(chart.tasks[id]);
 // commented out while testing, because of outsourcing to function chart.getUserColor
 
 /*                if (taskObject.users) {

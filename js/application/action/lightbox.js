@@ -114,10 +114,8 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
                             }catch (e){}
                             //if(typeof usersObj == null)
                             //    usersObj = {groups:[],users:[]};
-
                             var groupsString = Util.cleanArr(usersObj.groups).join(', ');
                             var usersString = Util.cleanArr(usersObj.users).join(', ');
-
                             fso[_name].value =  (!Util.isEmpty(groupsString) ? groupsString + ', ' : '') + usersString;
                             fso[_name].onclick = lbox.onClickLightboxInput;
                             break;
@@ -409,7 +407,6 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
     lbox.onLightboxSave = function (id, task, is_new){
         App.Action.Chart.readySave = true;
         App.Action.Chart.readyRequest = true;
-	console.log(lbox.task);
         /*
         var _id = null;
         // after entry in the database, you need to update the id
@@ -593,11 +590,15 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
                         jQuery('input[name='+name+'][data-type=user]', popup).prop('checked', true);
                         //fieldUsers.value = lbox.addResource(name);
                         App.Action.Chart.addJSONResource(lbox.task['id'], 'users', name);
+			// console.log(lbox.task);
+			App.Action.Chart.getUserColor(lbox.task['id'], lbox.task);
+			// console.log(lbox.task['id']);
                     }
                     else {
                         jQuery('input[name='+name+'][data-type=user]', popup).prop('checked', false);
                         //fieldUsers.value = lbox.removeResource(name);
                         App.Action.Chart.removeJSONResource(lbox.task['id'], 'users', name);
+			App.Action.Chart.getUserColor(lbox.task['id'], lbox.task);
                     }
                 }
                 else if(type === 'group') {
@@ -607,11 +608,13 @@ if(App.namespace) { App.namespace('Action.Lightbox', function(App) {
                         //jQuery('input[data-gid='+name+'][data-type=user]', popup).prop('checked', true);
                         //fieldUsers.value = lbox.addResource(_users);
                         App.Action.Chart.addJSONResource(lbox.task['id'], 'groups', name);
+			App.Action.Chart.getUserColor(lbox.task['id'], lbox.task);
                     } else {
                         // todo: отк/вкл чик юзеров
                         //jQuery('input[data-gid='+name+'][data-type=user]', popup).prop('checked', false);
                         //fieldUsers.value = lbox.removeResource(_users);
                         App.Action.Chart.removeJSONResource(lbox.task['id'], 'groups', name);
+			App.Action.Chart.getUserColor(lbox.task['id'], lbox.task);
                     }
                 }
             }
