@@ -12,7 +12,7 @@ if (App.namespace) {
         var GanttExt = App.Action.GanttExt;
         var Sidebar = App.Action.Sidebar;
         var Lightbox = App.Action.Lightbox;
-	var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
+        var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
 
         /**
          * @namespace App.Action.Chart
@@ -32,58 +32,62 @@ if (App.namespace) {
         };
         chart.states = [];
 
-	/**
-	 * @namespace App.Action.Chart.userColors
-	 * @type {*}
-	 */
+        /**
+         * @namespace App.Action.Chart.userColors
+         * @type {*}
+         */
+        //chart.userColors holds all users and their specified colors.
+        //This object can be called by App.Action.Chart.usercolors from other scripts within the owncollab_chart app.
         chart.userColors = [];
 
-	/**
-	 * @namespace App.Action.Chart.refreshUserColors
-	 * @param url
-	 */
-	chart.refreshUserColors = function(url) {
-		$.getJSON(url, function (data) {
-            	chart.userColors = data;
-		});
+        /**
+         * @namespace App.Action.Chart.refreshUserColors
+         * @param url
+         */
+        // chart.refreshUserColors refreshes chart.userColors by calling all data from the database.
+        //This object can be called by App.Action.Chart.refreshUserColors(url) from other scripts within the owncollab_chart app.
+        chart.refreshUserColors = function (url) {
+            $.getJSON(url, function (data) {
+                chart.userColors = data;
+            });
         };
-	chart.refreshUserColors(baseUrl);
-	
-	/**
-	 * @namespace App.Action.Chart.updateUserColors
-	 * @param id
-	 * @param taskObject
-	 * @param user
-	 * @param color
-	 */
-	chart.updateUserColors = function (id, taskObject, user, color) {
-		var obj = JSON.parse(taskObject.users);
-		var taskId = taskObject.id;
-		if (user) {
-			if(obj.groups[0] == user){
-				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", color);
-			}
-			if(!obj.groups[0] && obj.users[0] == user){
-				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", color);
-			}
-		}else{
-			if(obj.groups[0]){
-				console.log('user not set and existing group');
-				var groups = obj.groups[0];
-				var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
-				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", groupColor);
-			}
-			if(!obj.groups[0] && obj.users[0]){
-				console.log('user not set and no existing group');
-				var users = obj.users[0];
-				var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
-				$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", userColor[0].colorcode);
-			}
-		}
-		$.each(chart.tasks, function (id, taskObject){
-			chart.getUserColor(id, taskObject);
-		});
-	};
+        // Start loading the user specific colors before init starts
+        chart.refreshUserColors(baseUrl);
+
+        /**
+         * @namespace App.Action.Chart.updateUserColors
+         * @param id
+         * @param taskObject
+         * @param user
+         * @param color
+         */
+        // chart.updateUserColors updates the bar object of specific tasks, it needs at least an id and the taskObject
+        chart.updateUserColors = function (id, taskObject, user, color) {
+            var obj = JSON.parse(taskObject.users);
+            var taskId = taskObject.id;
+            if (user) {
+                if (obj.groups[0] == user) {
+                    $(".gantt_task_line.gantt_task_inline_color[task_id='" + taskId + "']").css("background-color", color);
+                }
+                if (!obj.groups[0] && obj.users[0] == user) {
+                    $(".gantt_task_line.gantt_task_inline_color[task_id='" + taskId + "']").css("background-color", color);
+                }
+            } else {
+                if (obj.groups[0]) {
+                    var groups = obj.groups[0];
+                    var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
+                    $(".gantt_task_line.gantt_task_inline_color[task_id='" + taskId + "']").css("background-color", groupColor);
+                }
+                if (!obj.groups[0] && obj.users[0]) {
+                    var users = obj.users[0];
+                    var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
+                    $(".gantt_task_line.gantt_task_inline_color[task_id='" + taskId + "']").css("background-color", userColor[0].colorcode);
+                }
+            }
+            $.each(chart.tasks, function (id, taskObject) {
+                chart.getUserColor(id, taskObject);
+            });
+        };
 
         /**
          * @namespace App.Action.Chart.readySave
@@ -97,29 +101,31 @@ if (App.namespace) {
          */
         chart.readyRequest = true;
 
-	/**
-	 * @namespace App.Action.Chart.getUserColor
-	 * @param id
-	 * @param taskObject
-	 */
-	chart.getUserColor = function (id, taskObject) {
-		if (taskObject.users) {
-			var obj = JSON.parse(taskObject.users);
-			if (obj.groups[0]) {
-				var groups = obj.groups[0];
-				var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
-				taskObject.color = groupColor[0].colorcode;
-			} else if (obj.users[0]) {
-				var users = obj.users[0];
-				var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
-				taskObject.color = userColor[0].colorcode;
-			} else {
-				taskObject.color = '';
-			}
-		} else {
-			taskObject.color = '';
-		}
-	};
+        /**
+         * @namespace App.Action.Chart.getUserColor
+         * @param id
+         * @param taskObject
+         */
+        // chart.getUserColor adds the color property to tasks
+        // This object can be called by App.Action.Chart.getUserColor(id, taskobject) from other scripts within the owncollab_chart app.
+        chart.getUserColor = function (id, taskObject) {
+            if (taskObject.users) {
+                var obj = JSON.parse(taskObject.users);
+                if (obj.groups[0]) {
+                    var groups = obj.groups[0];
+                    var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
+                    taskObject.color = groupColor[0].colorcode;
+                } else if (obj.users[0]) {
+                    var users = obj.users[0];
+                    var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
+                    taskObject.color = userColor[0].colorcode;
+                } else {
+                    taskObject.color = '';
+                }
+            } else {
+                taskObject.color = '';
+            }
+        };
         /**
          * @namespace App.Action.Chart.init
          * @param contentElement
@@ -132,24 +138,10 @@ if (App.namespace) {
             var baseUrl = OC.generateUrl('apps/owncollab_chart/colors');
             chart.contentElement = contentElement;
             chart.tasks = DataStore.get('tasks');
+
+            // Process every task in the chart and add the property color
             $.each(chart.tasks, function (id, taskObject) {
-// commented out while testing, because of outsourcing to function chart.getUserColor
-
-/*                if (taskObject.users) {
-                    var obj = JSON.parse(taskObject.users);
-                    if (obj.groups[0]) {
-                        var groups = obj.groups[0];
-                        var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
-                        taskObject.color = groupColor[0].colorcode;
-                    }
-                    if (obj.users[0]) {
-                        var users = obj.users[0];
-                        var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
-                        taskObject.color = userColor[0].colorcode;
-                    }
-
-                } */
-	    	chart.getUserColor(id, taskObject);
+                chart.getUserColor(id, taskObject);
             });
             chart.links = DataStore.get('links');
 

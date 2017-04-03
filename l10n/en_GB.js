@@ -85,8 +85,8 @@ OC.L10N.register(
             "Response error info": "Response error info",
             "Now": "Now",
             "Done": "Done",
-            "Application throw error": "Application throw error"
-
+            "Application throw error": "Application throw error",
+            "Group-/ Username": "Group-/ Username"
     },
     "nplurals=2; plural=(n != 1);"
 );

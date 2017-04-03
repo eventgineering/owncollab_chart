@@ -86,6 +86,7 @@ OC.L10N.register(
             "Now": "Jetzt",
             "Done": "Fertig",
             "Application throw error": "Die Anwendung meldet einen Fehler",
-            "Coloring": "Einfärben"
+            "Coloring": "Einfärben",
+            "Group-/ Username": "Gruppen-/ Benutzername"
     },
     "nplurals=2; plural=(n != 1);");

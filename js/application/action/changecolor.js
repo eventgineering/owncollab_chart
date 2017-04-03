@@ -7,6 +7,7 @@ if (App.namespace) {
 
 			$(document).ready(function () {
 
+				// Define the object Usercolors, which holds all user specific colors
 				var Usercolors = function (baseUrl) {
 					this._baseUrl = baseUrl;
 					this._usercolors = [];
@@ -14,6 +15,7 @@ if (App.namespace) {
 				};
 
 				Usercolors.prototype = {
+					// Load specific usercolor by providing a username
 					load: function (user) {
 						var self = this;
 						this._usercolors.forEach(function (usercolor) {
@@ -28,6 +30,7 @@ if (App.namespace) {
 					getActive: function () {
 						return this._activeUsercolor;
 					},
+					// Create a new user and color in the database by providing a color
 					create: function (usercolor) {
 						var deferred = $.Deferred();
 						var self = this;
@@ -49,6 +52,7 @@ if (App.namespace) {
 					getAll: function () {
 						return this._usercolors;
 					},
+					// Load all users and their colors from the database
 					loadAll: function () {
 						var deferred = $.Deferred();
 						var self = this;
@@ -71,16 +75,17 @@ if (App.namespace) {
 							data: JSON.stringify(usercolor)
 						});
 					},
+					// Update specific usercolor by providing user and colorcode
 					update: function (user, colorcode) {
 						var self = this;
-						$(App.Action.Chart.userColors).each( function () {
+						$(App.Action.Chart.userColors).each(function () {
 							if (this.user == user) this.colorcode = colorcode;
 						});
 						$.each(App.Action.Chart.tasks, function (id, taskObject) {
 							App.Action.Chart.getUserColor(id, taskObject);
 						});
 						this._usercolors.forEach(function (usercolor) {
-							if (usercolor.user === user){
+							if (usercolor.user === user) {
 								usercolor.colorcode = colorcode;
 								return $.ajax({
 									url: usercolors._baseUrl + '/' + usercolor.user,
@@ -92,20 +97,22 @@ if (App.namespace) {
 						});
 					}
 				};
-
+				// generate the HTML code for the colorPickers
 				function renderColors() {
 					var groupsusers = DataStore.get('groupsusers');
 					var deprecatedUsers = ['collab_user'];
+					// get the colorcodes for all groups
 					for (var groupName in groupsusers) {
 						var users = groupsusers[groupName],
 							usersCount = users.length;
 						var arr = usercolors._usercolors;
 						var ccode = $.grep(arr, function (group) { return group.user == 'g_' + groupName });
 						var ccode1 = 'rgb(75, 113, 164)';
+						// create a user with the color ccode1 if the group does not exist in the color table
 						if (ccode.length == 0) {
 							var usercolor = {
 								user: 'g_' + groupName,
-								colorcode: 'rgb(75, 113, 164)'
+								colorcode: ccode1
 							};
 							usercolors.create(usercolor).done(function () {
 								console.log('saved');
@@ -115,25 +122,20 @@ if (App.namespace) {
 						} else {
 							ccode1 = ccode[0]['colorcode'];
 						}
-
+						// create the coresonding colorpicker element
 						$("#col_g_" + groupName).spectrum({
 							color: ccode1,
 							showPaletteOnly: true,
 							hideAfterPaletteSelect: true,
-							change: function(changeColor) {
-									var userString2 = $(this).prop("id").replace('col_', '');
-									var colorString = changeColor.toRgbString();
-									usercolors.update(userString2, colorString);
-									var tempTasks = $.grep(App.Action.Chart.states, function(data) {return data.users != null && data.users != ""});
-									$.each(tempTasks, function(id, taskObject){
-										App.Action.Chart.updateUserColors(id, taskObject, userString2.replace('g_', ''), colorString);
-/*										var obj = JSON.parse(taskObject.users);
-										var taskId = taskObject.id;
-										if(obj.groups[0] == userString2.replace('g_', '')){
-										$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", colorString);
-										 }*/
-									});
-								},
+							change: function (changeColor) {
+								var userString2 = $(this).prop("id").replace('col_', '');
+								var colorString = changeColor.toRgbString();
+								usercolors.update(userString2, colorString);
+								var tempTasks = $.grep(App.Action.Chart.states, function (data) { return data.users != null && data.users != "" });
+								$.each(tempTasks, function (id, taskObject) {
+									App.Action.Chart.updateUserColors(id, taskObject, userString2.replace('g_', ''), colorString);
+								});
+							},
 
 							palette: [
 								["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
@@ -152,7 +154,7 @@ if (App.namespace) {
 									"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
 							]
 						});
-
+						// get the colorcodes for all groups
 						for (var i = 0; i < usersCount; i++) {
 							if (deprecatedUsers.indexOf(users[i]['uid']) !== -1) continue;
 							var uid = users[i]['uid'];
@@ -160,10 +162,11 @@ if (App.namespace) {
 							var arr = usercolors._usercolors;
 							var ccode = $.grep(arr, function (person) { return person.user == userString });
 							var ccode1 = 'rgb(75, 113, 164)';
+							// create a user with the color ccode1 if the user does not exist in the color table
 							if (ccode.length == 0) {
 								var usercolor = {
 									user: 'u_' + uid,
-									colorcode: 'rgb(75, 113, 164)'
+									colorcode: ccode1
 								};
 								usercolors.create(usercolor).done(function () {
 									console.log('saved');
@@ -173,24 +176,20 @@ if (App.namespace) {
 							} else {
 								ccode1 = ccode[0]['colorcode'];
 							}
+							// create the coresonding colorpicker element
 							$("#col_" + userString).spectrum({
 								color: ccode1,
 								showPaletteOnly: true,
 								hideAfterPaletteSelect: true,
-								change: function(changeColor) {
+								change: function (changeColor) {
 									var userString2 = $(this).prop("id").replace('col_', '');
 									var colorString = changeColor.toRgbString();
 									usercolors.update(userString2, colorString);
-									var tempTasks = $.grep(App.Action.Chart.states, function(data) {return data.users != null && data.users != ""});
-									$.each(tempTasks, function(id, taskObject){
+									var tempTasks = $.grep(App.Action.Chart.states, function (data) { return data.users != null && data.users != "" });
+									$.each(tempTasks, function (id, taskObject) {
 										App.Action.Chart.updateUserColors(id, taskObject, userString2.replace('u_', ''), colorString);
-/*										var obj = JSON.parse(taskObject.users);
-										var taskId = taskObject.id;
-										if(!obj.groups[0] && obj.users[0] == userString2.replace('u_', '')){
-										$(".gantt_task_line.gantt_task_inline_color[task_id='"+taskId+"']").css("background-color", colorString);
-										 }*/
 									});
-									},
+								},
 								palette: [
 									["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
 										"rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
@@ -215,12 +214,13 @@ if (App.namespace) {
 
 
 				$('#sidebar_tab_3').click(function () {
+					// fill the sidebar with the usernames and their specific input fields
 					if ($('#userlist').length == 0) {
 						var fragment = document.createDocumentFragment();
 						var groupsusers = DataStore.get('groupsusers');
 						var deprecatedUsers = ['collab_user'];
 						var _table = document.createElement('table');
-						_table.innerHTML += '<thead><tr><th width="70%"><b>Group-/ Username</b></th><th width="30%"><b>Color</b></th></tr></thead>';
+						_table.innerHTML += '<thead><tr><th width="70%"><b><?php p($l->t('Group-/ Username'));?></b></th><th width="30%"><b>Color</b></th></tr></thead>';
 						_table.innerHTML += '<tbody></tbody>';
 						_table.id = 'userlist';
 						_table.width = '100%';
@@ -233,17 +233,17 @@ if (App.namespace) {
 								_inputLabel = document.createElement('label'),
 								_inputSpan = document.createElement('span'),
 								users = groupsusers[groupName],
-								usersCount = users.length;
-							_inputGroup.name = String(groupName).trim();
-							_inputGroup.type = 'checkbox';
-							_inputGroup.className = 'group';
-							_inputGroup.setAttribute('data-type', 'group');
-							_lineGroup.appendChild(_inputGroup);
-							_inputLabel.appendChild(_inputSpan);
-							_lineGroup.appendChild(_inputLabel);
-							_inputGroup.id = 'group' + groupName;
-							_inputLabel.setAttribute('for', 'group' + groupName);
-							_inputLabel.innerHTML += ' <strong>' + groupName + '</strong>';
+								usersCount = users.length,
+								_inputGroup.name = String(groupName).trim(),
+								_inputGroup.type = 'checkbox',
+								_inputGroup.className = 'group',
+								_inputGroup.setAttribute('data-type', 'group'),
+								_lineGroup.appendChild(_inputGroup),
+								_inputLabel.appendChild(_inputSpan),
+								_lineGroup.appendChild(_inputLabel),
+								_inputGroup.id = 'group' + groupName,
+								_inputLabel.setAttribute('for', 'group' + groupName),
+								_inputLabel.innerHTML += ' <strong>' + groupName + '</strong>';
 							var rowCount = _tableRef.rows.length;
 							var row = _tableRef.insertRow(rowCount);
 							var colorId = 'col_g_' + groupName;
@@ -255,19 +255,19 @@ if (App.namespace) {
 								var _inlineUser = document.createElement('span'),
 									_inputUser = document.createElement('input'),
 									_inputUserLabel = document.createElement('label'),
-									_inputUserSpan = document.createElement('span');
-								_inputUser.name = users[i]['uid'];
-								_inputUser.type = 'checkbox';
-								_inputUser.className = 'user';
-								_inputUser.setAttribute('data-type', 'user');
-								_inputUser.setAttribute('data-gid', users[i]['gid']);
-								_inputUser.id = 'u_' + users[i]['uid'];
-								_inputUserLabel.setAttribute('for', 'u_' + users[i]['uid']);
-								_inputUserLabel.appendChild(_inputUserSpan);
-								_inputUserLabel.innerHTML += users[i]['uid'];
-								_inlineUser.appendChild(_inputUser);
-								_inlineUser.appendChild(_inputUserLabel);
-								_lineUsers.appendChild(_inlineUser);
+									_inputUserSpan = document.createElement('span'),
+									_inputUser.name = users[i]['uid'],
+									_inputUser.type = 'checkbox',
+									_inputUser.className = 'user',
+									_inputUser.setAttribute('data-type', 'user'),
+									_inputUser.setAttribute('data-gid', users[i]['gid']),
+									_inputUser.id = 'u_' + users[i]['uid'],
+									_inputUserLabel.setAttribute('for', 'u_' + users[i]['uid']),
+									_inputUserLabel.appendChild(_inputUserSpan),
+									_inputUserLabel.innerHTML += users[i]['uid'],
+									_inlineUser.appendChild(_inputUser),
+									_inlineUser.appendChild(_inputUserLabel),
+									_lineUsers.appendChild(_inlineUser);
 								var rowCount = _tableRef.rows.length;
 								var row = _tableRef.insertRow(rowCount);
 								var uid = users[i]['uid'];
@@ -278,6 +278,7 @@ if (App.namespace) {
 							$('#chart_coloring').append(_table);
 						}
 					}
+					// render the colorPickers
 					renderColors();
 				});
 
@@ -294,15 +295,6 @@ if (App.namespace) {
 				}).fail(function () {
 					alert('Could not load usercolors');
 				});
-				//				console.log(baseUrl);
-				//				$.getJSON(baseUrl + '/colors', function(result){
-				//					var items="";
-				//					$.each(result, function(i, data){
-				//						console.log('uid:' + data.user + ' color:' + data.colorcode)
-				//					});
-				//				});
-
-
 			});
 		})(OC, window, jQuery);
 	})
