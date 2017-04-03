@@ -6,6 +6,8 @@ if (App.namespace) {
 			'use strict';
 
 			$(document).ready(function () {
+				var translationNameheader = $("[id='Group-/ Username']").text();
+				var translationColor = $('#Color').text();
 
 				// Define the object Usercolors, which holds all user specific colors
 				var Usercolors = function (baseUrl) {
@@ -220,7 +222,7 @@ if (App.namespace) {
 						var groupsusers = DataStore.get('groupsusers');
 						var deprecatedUsers = ['collab_user'];
 						var _table = document.createElement('table');
-						_table.innerHTML += '<thead><tr><th width="70%"><b><?php p($l->t("Group-/ Username"));?></b></th><th width="30%"><b>Color</b></th></tr></thead>';
+						_table.innerHTML += '<thead><tr><th width="70%"><b>'+translationNameheader+'</b></th><th width="30%"><b>'+translationColor+'</b></th></tr></thead>';
 						_table.innerHTML += '<tbody></tbody>';
 						_table.id = 'userlist';
 						_table.width = '100%';

@@ -4,6 +4,10 @@ html, body {
     margin: 0px;
     overflow: hidden;
 }
+#translations {
+    display: none;
+}
+
 b, strong { font-weight: 600 !important }
 .tbl{display: table; width:100%;}
 .tbl_cell{display: table-cell;}
