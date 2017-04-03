@@ -220,7 +220,7 @@ if (App.namespace) {
 						var groupsusers = DataStore.get('groupsusers');
 						var deprecatedUsers = ['collab_user'];
 						var _table = document.createElement('table');
-						_table.innerHTML += '<thead><tr><th width="70%"><b><?php p($l->t('Group-/ Username'));?></b></th><th width="30%"><b>Color</b></th></tr></thead>';
+						_table.innerHTML += '<thead><tr><th width="70%"><b><?php p($l->t("Group-/ Username"));?></b></th><th width="30%"><b>Color</b></th></tr></thead>';
 						_table.innerHTML += '<tbody></tbody>';
 						_table.id = 'userlist';
 						_table.width = '100%';
@@ -233,16 +233,16 @@ if (App.namespace) {
 								_inputLabel = document.createElement('label'),
 								_inputSpan = document.createElement('span'),
 								users = groupsusers[groupName],
-								usersCount = users.length,
-								_inputGroup.name = String(groupName).trim(),
-								_inputGroup.type = 'checkbox',
-								_inputGroup.className = 'group',
-								_inputGroup.setAttribute('data-type', 'group'),
-								_lineGroup.appendChild(_inputGroup),
-								_inputLabel.appendChild(_inputSpan),
-								_lineGroup.appendChild(_inputLabel),
-								_inputGroup.id = 'group' + groupName,
-								_inputLabel.setAttribute('for', 'group' + groupName),
+								usersCount = users.length;
+								_inputGroup.name = String(groupName).trim();
+								_inputGroup.type = 'checkbox';
+								_inputGroup.className = 'group';
+								_inputGroup.setAttribute('data-type', 'group');
+								_lineGroup.appendChild(_inputGroup);
+								_inputLabel.appendChild(_inputSpan);
+								_lineGroup.appendChild(_inputLabel);
+								_inputGroup.id = 'group' + groupName;
+								_inputLabel.setAttribute('for', 'group' + groupName);
 								_inputLabel.innerHTML += ' <strong>' + groupName + '</strong>';
 							var rowCount = _tableRef.rows.length;
 							var row = _tableRef.insertRow(rowCount);
@@ -255,18 +255,18 @@ if (App.namespace) {
 								var _inlineUser = document.createElement('span'),
 									_inputUser = document.createElement('input'),
 									_inputUserLabel = document.createElement('label'),
-									_inputUserSpan = document.createElement('span'),
-									_inputUser.name = users[i]['uid'],
-									_inputUser.type = 'checkbox',
-									_inputUser.className = 'user',
-									_inputUser.setAttribute('data-type', 'user'),
-									_inputUser.setAttribute('data-gid', users[i]['gid']),
-									_inputUser.id = 'u_' + users[i]['uid'],
-									_inputUserLabel.setAttribute('for', 'u_' + users[i]['uid']),
-									_inputUserLabel.appendChild(_inputUserSpan),
-									_inputUserLabel.innerHTML += users[i]['uid'],
-									_inlineUser.appendChild(_inputUser),
-									_inlineUser.appendChild(_inputUserLabel),
+									_inputUserSpan = document.createElement('span');
+									_inputUser.name = users[i]['uid'];
+									_inputUser.type = 'checkbox';
+									_inputUser.className = 'user';
+									_inputUser.setAttribute('data-type', 'user');
+									_inputUser.setAttribute('data-gid', users[i]['gid']);
+									_inputUser.id = 'u_' + users[i]['uid'];
+									_inputUserLabel.setAttribute('for', 'u_' + users[i]['uid']);
+									_inputUserLabel.appendChild(_inputUserSpan);
+									_inputUserLabel.innerHTML += users[i]['uid'];
+									_inlineUser.appendChild(_inputUser);
+									_inlineUser.appendChild(_inputUserLabel);
 									_lineUsers.appendChild(_inlineUser);
 								var rowCount = _tableRef.rows.length;
 								var row = _tableRef.insertRow(rowCount);
