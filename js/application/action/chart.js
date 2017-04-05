@@ -108,7 +108,6 @@ if (App.namespace) {
          */
         // chart.getUserColor adds the color property to tasks
         // This object can be called by App.Action.Chart.getUserColor(id, taskobject) from other scripts within the owncollab_chart app.
-        chart.getUserColor = function (id, taskObject) {
             if (taskObject.users) {
                 var obj = JSON.parse(taskObject.users);
                 if (obj.groups[0]) {

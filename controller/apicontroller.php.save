@@ -421,31 +421,13 @@ class ApiController extends Controller
             'errorinfo' => '',
             //'requesttoken'  => (!\OC_Util::isCallRegistered()) ? '' : \OC_Util::callRegister(),
         ];
+        $tmpFileName = 'gantt_export_' . Helper::randomString() . '.pdf';
+        $tmpFilePath = \OC::$SERVERROOT . \OC_App::getAppWebPath('owncollab_chart') . '/tmp/' . $tmpFileName;
+        $encodeData = 'data=' . urlencode($data['data']) . '&type=pdf';
 
-	$randomValue = Helper::randomString();
-	$path = \OC::$SERVERROOT . \OC_App::getAppWebPath('owncollab_chart') . '/tmp/';
-	$dataFile = $path.'/data.' . $randomValue . '.txt';
-	$pdfFile = $path.'/gantt.' . $randomValue . '.pdf';
-	$tmpFilePath = $pdfFile;
-	$encodeData = 'data=' . urlencode($data['data']) . '&type=pdf';
-	$encodeData = str_replace("%28", "(", $encodeData);
-	$encodeData = str_replace("%29", ")", $encodeData);
-
-// For testing purposes
-	file_put_contents($dataFile, $encodeData);
-//	system('curl --request POST "https://export.dhtmlx.com/gantt" --data "@' . $dataFile . '" >> '.$pdfFile);
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, "https://export.dhtmlx.com/gantt");
-	curl_setopt($ch, CURLOPT_POSTFIELDS,  $encodeData);
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$output = curl_exec($ch);
-	curl_close($ch);
-	file_put_contents($pdfFile, $output);
-
-	$result = file_get_contents($pdfFile);
+        ob_start();
+        system('curl --request POST "https://export.dhtmlx.com/gantt" --data "' . $encodeData . '"');
+        $result = ob_get_clean();
 
         //$params['$encodeData'] = $encodeData;
         //$params['$tmpFilePath'] = print_r($result, true);
@@ -556,7 +538,7 @@ class ApiController extends Controller
         $footer_right = isset($labels['footer_right']) ? $labels['footer_right'] : '';
 
         $header = '
-            <table width="100%" style="vertical-align: bottom; font-family: sans-serif; font-size: 10pt; color: #7d7d7d"><tr>
+            <table width="100%" style="vertical-align: bottom; font-size: 12pt; font-weight: bold"><tr>
             <td width="33%">' . $head_left . '</td>
             <td width="33%" align="center">' . $head_center . '</td>
             <td width="33%" style="text-align: right;">' . $head_right . '</td>
@@ -564,7 +546,7 @@ class ApiController extends Controller
             ';
 
         $footer = '
-	    <table width="100%" style="vertical-align: bottom; font-family: sans-serif; font-size: 10pt; color: #7d7d7d"><tr>
+            <table width="100%" style="vertical-align: bottom; font-size: 12pt; font-weight: bold"><tr>
             <td width="33%">' . $footer_left . '</td>
             <td width="33%" align="center">' . $footer_center . '</td>
             <td width="33%" style="text-align: right;">' . $footer_right . '</td>
