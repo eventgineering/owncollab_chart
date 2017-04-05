@@ -690,7 +690,7 @@ div.dhx_modal_cover {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #4B71A4;
-    border: 1px solid #4B71A4;
+    border: 0px solid #4B71A4;
     -webkit-user-select: none;
     -moz-user-select: none;
     -moz-user-select: -moz-none
@@ -1544,6 +1544,8 @@ div.dhx_modal_cover {
     background-color: rgba(0,0,0,0) !important;
     border: none !important;
     box-shadow: inset 0px 10px 0px 0px #1C2C42;
+    height: 10px !important;
+    line-height: 10px !important;
 }
 .gantt_project:before {
     content: " ";

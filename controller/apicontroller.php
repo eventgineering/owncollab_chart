@@ -432,7 +432,7 @@ class ApiController extends Controller
 	$encodeData = str_replace("%29", ")", $encodeData);
 
 // For testing purposes
-	file_put_contents($dataFile, $encodeData);
+//	file_put_contents($dataFile, $encodeData);
 //	system('curl --request POST "https://export.dhtmlx.com/gantt" --data "@' . $dataFile . '" >> '.$pdfFile);
 
 	$ch = curl_init();

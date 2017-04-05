@@ -109,28 +109,38 @@ if (App.namespace) {
         // chart.getUserColor adds the color property to tasks
         // This object can be called by App.Action.Chart.getUserColor(id, taskobject) from other scripts within the owncollab_chart app.
         chart.getUserColor = function (id, taskObject) {
-            var sheets = document.styleSheets;
-            var len = sheets.length;
-            for (var i=0; i<len; i++) {
-                console.log(document.styleSheets[i]);
-            }
-            if (taskObject.users) {
-                var obj = JSON.parse(taskObject.users);
-                if (obj.groups[0]) {
-                    var groups = obj.groups[0];
-                    var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
-                    taskObject.color = groupColor[0].colorcode;
-                } else if (obj.users[0]) {
-                    var users = obj.users[0];
-                    var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
-                    taskObject.color = userColor[0].colorcode;
-                } else {
-                    taskObject.color = '';
-                }
-            } else {
-                taskObject.color = '';
-            }
+		if (taskObject.type === 'task'){
+	            if (taskObject.users) {
+	                var obj = JSON.parse(taskObject.users);
+	                if (obj.groups[0]) {
+	                    var groups = obj.groups[0];
+	                    var groupColor = $.grep(chart.userColors, function (color) { return color.user == 'g_' + groups });
+	                    taskObject.color = groupColor[0].colorcode;
+	                } else if (obj.users[0]) {
+	                    var users = obj.users[0];
+	                    var userColor = $.grep(chart.userColors, function (color) { return color.user == 'u_' + users });
+	                    taskObject.color = userColor[0].colorcode;
+	                } else {
+	                    taskObject.color = 'rgb(75, 113, 164)';
+	                }
+	            } else {
+	                taskObject.color = 'rgb(75, 113, 164)';
+			console.log(taskObject);
+	            }
+		}
+		if (taskObject.type === 'project'){
+			taskObject.color ='rgb(28, 44, 66)';
+		}
         };
+	        /**
+         * @namespace App.Action.Chart.getLinkColor
+         * @param id
+         * @param linkObject
+         */
+        chart.getLinkColor = function (id, linkObject) {
+		linkObject.color = 'rgb(47,47,47)';
+        };
+
         /**
          * @namespace App.Action.Chart.init
          * @param contentElement
@@ -149,6 +159,11 @@ if (App.namespace) {
                 chart.getUserColor(id, taskObject);
             });
             chart.links = DataStore.get('links');
+
+            // Process every link in the chart and add the property color
+            $.each(chart.links, function (id, linkObject) {
+                chart.getLinkColor(id, linkObject);
+            });
 
             chart.ganttInit(callbackGanttReady, callbackGanttLoaded);
 

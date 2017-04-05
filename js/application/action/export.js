@@ -143,7 +143,7 @@ if(App.namespace) { App.namespace('Action.Export', function(App) {
 
         var config = defaults((config, {
 	    raw: true,
-	    header: '<link rel="stylesheet" href="https://demo2.owncollab.com/apps/owncollab_chart/css/main.css">',
+	    header: '<link rel="stylesheet" href="https://demo2.owncollab.com/apps/owncollab_chart/css/dhtmlxgantt.css">',
             name: "gantt.pdf",
 //            locale: App.locale,
             data: gantt._serialize_html(),
